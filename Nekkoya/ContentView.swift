@@ -3,13 +3,9 @@ import SwiftUI
 /// A view that renders the content of the app.
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Text("🌎")
-                .font(.system(size: 96))
-            Text("Hello, world!")
-                .font(.system(size: 48, weight: .bold, design: .rounded))
-        }
-            .padding()
+        CircularSector(angle: .degrees(90), offset: .degrees(10))
+            .fill(Color.blue)
+            .frame(width: 400, height: 400)
     }
 }
 
@@ -17,6 +13,8 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .padding()
+            .previewLayout(.sizeThatFits)
     }
 }
 #endif
