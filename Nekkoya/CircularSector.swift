@@ -6,9 +6,6 @@ struct CircularSector: Shape {
     /// The central angle.
     let angle: Angle
     
-    /// The angle offset.
-    let offset: Angle
-    
     func path(in rect: CGRect) -> Path {
         let center = CGPoint(x: rect.midX, y: rect.midY)
         
@@ -17,8 +14,8 @@ struct CircularSector: Shape {
             path.addArc(
                 center: center,
                 radius: rect.width / 2,
-                startAngle: offset,
-                endAngle: angle + offset,
+                startAngle: .zero,
+                endAngle: angle,
                 clockwise: false
             )
         }

@@ -3,8 +3,9 @@ import SwiftUI
 /// A view that renders the content of the app.
 struct ContentView: View {
     var body: some View {
-        CircularSector(angle: .degrees(90), offset: .degrees(10))
+        CircularSector(angle: .degrees(90))
             .fill(Color.blue)
+            .rotationEffect(.degrees(10))
             .frame(width: 400, height: 400)
     }
 }
