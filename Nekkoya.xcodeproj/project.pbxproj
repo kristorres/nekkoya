@@ -12,6 +12,7 @@
 		303C8B9627F54BC50062086B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 303C8B9527F54BC50062086B /* Assets.xcassets */; };
 		303C8B9927F54BC50062086B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 303C8B9827F54BC50062086B /* Preview Assets.xcassets */; };
 		303C8BA427F667070062086B /* CircularSector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303C8BA327F667070062086B /* CircularSector.swift */; };
+		303C8BA627F785F10062086B /* WedgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303C8BA527F785F10062086B /* WedgeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		303C8BA027F54D6D0062086B /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		303C8BA227F556550062086B /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		303C8BA327F667070062086B /* CircularSector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularSector.swift; sourceTree = "<group>"; };
+		303C8BA527F785F10062086B /* WedgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WedgeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +63,7 @@
 				303C8BA327F667070062086B /* CircularSector.swift */,
 				303C8B9327F54BC40062086B /* ContentView.swift */,
 				303C8B9127F54BC40062086B /* NekkoyaApp.swift */,
+				303C8BA527F785F10062086B /* WedgeView.swift */,
 				303C8BA127F54E570062086B /* Supporting Files */,
 				303C8B9727F54BC50062086B /* Preview Content */,
 			);
@@ -157,6 +160,7 @@
 				303C8B9227F54BC40062086B /* NekkoyaApp.swift in Sources */,
 				303C8B9427F54BC40062086B /* ContentView.swift in Sources */,
 				303C8BA427F667070062086B /* CircularSector.swift in Sources */,
+				303C8BA627F785F10062086B /* WedgeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
