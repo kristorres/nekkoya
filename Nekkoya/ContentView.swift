@@ -18,26 +18,16 @@ struct ContentView: View {
     ]
     
     var body: some View {
-        ZStack {
-            ForEach(members.indices, id: \.self) { index in
-                WedgeView(label: members[index], angle: wedgeAngle)
-                    .rotationEffect(wedgeAngle * Double(index))
-            }
-        }
+        RouletteView(items: members)
             .frame(width: 400, height: 400)
-    }
-    
-    private var wedgeAngle: Angle {
-        .radians(.pi * 2) / Double(members.count)
+            .padding()
     }
 }
 
 #if DEBUG
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
-            .padding()
-            .previewLayout(.sizeThatFits)
+        ContentView().previewLayout(.sizeThatFits)
     }
 }
 #endif
