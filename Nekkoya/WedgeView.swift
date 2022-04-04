@@ -9,16 +9,32 @@ struct WedgeView: View {
     /// The central angle of the wedge.
     let angle: Angle
     
+    /// The hue of the wedge’s background color.
+    private let hue = Double.random(in: 0 ... 1)
+    
     var body: some View {
         GeometryReader { geometry in
             CircularSector(angle: angle)
-                .fill(Color.blue)
+                .fill(backgroundGradient)
                 .overlay(
                     Text(label)
+                        .shadow(color: .black, radius: 4)
                         .offset(x: geometry.size.width / 4)
                         .rotationEffect(angle / 2)
                 )
         }
+    }
+    
+    /// The background gradient of the wedge.
+    var backgroundGradient: AngularGradient {
+        let startColor = Color(hue: hue, saturation: 0.4, brightness: 0.8)
+        let endColor = Color(hue: hue, saturation: 0.7, brightness: 0.9)
+        
+        return AngularGradient(
+            gradient: Gradient(colors: [startColor, endColor]),
+            center: .center,
+            angle: angle
+        )
     }
 }
 
