@@ -16,15 +16,23 @@ struct RouletteView: View {
     /// The wedges on the wheel.
     private let wedges: [(label: String, hue: Double)]
     
+    /// The angle offset as a result of spinning the wheel.
+    @State private var spinAngle = Angle.zero
+    
     var body: some View {
-        ZStack {
-            ForEach(wedges.indices, id: \.self) { index in
-                WedgeView(
-                    label: wedges[index].label,
-                    angle: wedgeAngle,
-                    hue: wedges[index].hue
-                )
-                    .rotationEffect(wedgeAngle * Double(index))
+        GeometryReader { geometry in
+            ZStack {
+                ForEach(wedges.indices, id: \.self) { index in
+                    WedgeView(
+                        label: wedges[index].label,
+                        angle: wedgeAngle,
+                        hue: wedges[index].hue
+                    )
+                        .rotationEffect(wedgeAngle * Double(index))
+                }
+                    .rotationEffect(spinAngle)
+                
+                spinButton(width: geometry.size.width / 4)
             }
         }
     }
@@ -32,6 +40,27 @@ struct RouletteView: View {
     /// The central angle of each wedge on the wheel.
     private var wedgeAngle: Angle {
         .radians(.pi * 2) / Double(wedges.count)
+    }
+    
+    /// Returns a button that spins the wheel.
+    ///
+    /// - Parameter width: The width of the button.
+    ///
+    /// - Returns: The button.
+    private func spinButton(width: CGFloat) -> some View {
+        ZStack {
+            Circle()
+                .fill(.black)
+                .frame(width: width)
+            Text("SPIN")
+                .font(.system(size: width / 4, weight: .bold, design: .rounded))
+                .foregroundColor(.white)
+        }
+            .onTapGesture {
+                withAnimation(.easeOut(duration: 10)) {
+                    spinAngle += .radians(.pi * 2) * .random(in: 20 ... 30)
+                }
+            }
     }
 }
 
