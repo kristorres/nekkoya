@@ -14,12 +14,19 @@ struct WedgeView: View {
     
     var body: some View {
         GeometryReader { geometry in
+            let radius = geometry.size.width / 2
+            
             CircularSector(angle: angle)
                 .fill(backgroundGradient)
                 .overlay(
-                    Text(label)
-                        .shadow(color: .black, radius: 4)
-                        .offset(x: geometry.size.width / 4)
+                    HStack {
+                        Spacer()
+                        Text(label)
+                            .shadow(color: .black, radius: 4)
+                            .padding(.trailing)
+                    }
+                        .frame(width: radius)
+                        .offset(x: radius / 2)
                         .rotationEffect(angle / 2)
                 )
         }
