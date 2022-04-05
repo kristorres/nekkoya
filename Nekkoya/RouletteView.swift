@@ -3,13 +3,27 @@ import SwiftUI
 /// A view that renders a roulette-style wheel.
 struct RouletteView: View {
     
-    /// The labels of the items that are displayed on the wheel’s wedges.
-    let items: [String]
+    /// Creates a roulette-style wheel with the given items.
+    ///
+    /// - Parameter items: The labels of the items that are displayed on the
+    ///                    wheel’s wedges.
+    init(items: [String]) {
+        self.wedges = items.map {
+            ($0, .random(in: 0 ... 1))
+        }
+    }
+    
+    /// The wedges on the wheel.
+    private let wedges: [(label: String, hue: Double)]
     
     var body: some View {
         ZStack {
-            ForEach(items.indices, id: \.self) { index in
-                WedgeView(label: items[index], angle: wedgeAngle)
+            ForEach(wedges.indices, id: \.self) { index in
+                WedgeView(
+                    label: wedges[index].label,
+                    angle: wedgeAngle,
+                    hue: wedges[index].hue
+                )
                     .rotationEffect(wedgeAngle * Double(index))
             }
         }
@@ -17,7 +31,7 @@ struct RouletteView: View {
     
     /// The central angle of each wedge on the wheel.
     private var wedgeAngle: Angle {
-        .radians(.pi * 2) / Double(items.count)
+        .radians(.pi * 2) / Double(wedges.count)
     }
 }
 

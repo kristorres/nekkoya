@@ -10,7 +10,7 @@ struct WedgeView: View {
     let angle: Angle
     
     /// The hue of the wedge’s background color.
-    private let hue = Double.random(in: 0 ... 1)
+    let hue: Double
     
     var body: some View {
         GeometryReader { geometry in
@@ -48,7 +48,7 @@ struct WedgeView: View {
 #if DEBUG
 struct WedgeView_Previews: PreviewProvider {
     static var previews: some View {
-        WedgeView(label: "Kris Torres", angle: .degrees(90))
+        WedgeView(label: "Kris Torres", angle: .degrees(90), hue: 0.6)
             .rotationEffect(.degrees(10))
             .frame(width: 400, height: 400)
             .padding()
