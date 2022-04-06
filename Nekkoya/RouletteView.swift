@@ -58,6 +58,7 @@ struct RouletteView: View {
             return
         }
         
+        spinAngle.normalize()
         isSpinning = true
         withAnimation(.easeOut(duration: Constants.spinTime)) {
             spinAngle += (.radians(.pi * 2) * turnCount)
