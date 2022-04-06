@@ -22,6 +22,7 @@ struct WedgeView: View {
                     HStack {
                         Spacer()
                         Text(label)
+                            .foregroundColor(.white)
                             .shadow(color: .black, radius: 4)
                             .padding(.trailing)
                     }

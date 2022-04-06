@@ -24,6 +24,8 @@ struct RouletteView: View {
     
     var body: some View {
         GeometryReader { geometry in
+            let radius = geometry.size.width / 2
+            
             ZStack {
                 ForEach(wedges.indices, id: \.self) { index in
                     WedgeView(
@@ -35,7 +37,12 @@ struct RouletteView: View {
                 }
                     .rotationEffect(spinAngle)
                 
-                spinButton(width: geometry.size.width / 4)
+                Image(systemName: "arrowtriangle.up.fill")
+                    .font(.system(size: radius / 8))
+                    .foregroundColor(.black)
+                    .offset(y: -radius / 3)
+                
+                spinButton(width: radius / 2)
             }
         }
     }
