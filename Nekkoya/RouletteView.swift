@@ -19,6 +19,9 @@ struct RouletteView: View {
     /// The angle offset as a result of spinning the wheel.
     @State private var spinAngle = Angle.zero
     
+    /// Indicates whether the wheel is spinning.
+    @State private var isSpinning = false
+    
     var body: some View {
         GeometryReader { geometry in
             ZStack {
@@ -37,9 +40,31 @@ struct RouletteView: View {
         }
     }
     
+    /// The number of turns in a spin.
+    private var turnCount: Double {
+        return .random(in: Constants.minTurnCount ... Constants.maxTurnCount)
+    }
+    
     /// The central angle of each wedge on the wheel.
     private var wedgeAngle: Angle {
         .radians(.pi * 2) / Double(wedges.count)
+    }
+    
+    /// Spins the wheel.
+    ///
+    /// If `isSpinning == true`, then this method will do nothing.
+    private func spin() {
+        if isSpinning {
+            return
+        }
+        
+        isSpinning = true
+        withAnimation(.easeOut(duration: Constants.spinTime)) {
+            spinAngle += (.radians(.pi * 2) * turnCount)
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + Constants.spinTime) {
+            isSpinning = false
+        }
     }
     
     /// Returns a button that spins the wheel.
@@ -54,13 +79,16 @@ struct RouletteView: View {
                 .frame(width: width)
             Text("SPIN")
                 .font(.system(size: width / 4, weight: .bold, design: .rounded))
-                .foregroundColor(.white)
+                .foregroundColor(isSpinning ? .clear : .white)
         }
-            .onTapGesture {
-                withAnimation(.easeOut(duration: 10)) {
-                    spinAngle += .radians(.pi * 2) * .random(in: 20 ... 30)
-                }
-            }
+            .onTapGesture(perform: spin)
+    }
+    
+    /// An internal enum that contains constants.
+    private enum Constants {
+        static let spinTime = 10.0
+        static let minTurnCount = 20.0
+        static let maxTurnCount = 30.0
     }
 }
 
