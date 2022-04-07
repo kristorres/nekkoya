@@ -5,16 +5,33 @@ struct RouletteView: View {
     
     /// Creates a roulette-style wheel with the given items.
     ///
-    /// - Parameter items: The labels of the items that are displayed on the
-    ///                    wheel’s wedges.
-    init(items: [String]) {
+    /// - Parameter items:           The labels of the items that are displayed
+    ///                              on the wheel’s wedges.
+    /// - Parameter onStartSpinning: The action to perform when the wheel starts
+    ///                              spinning.
+    /// - Parameter onStopSpinning:  The action to perform when the wheel stops
+    ///                              spinning. The closure takes the chosen item
+    ///                              as its sole argument.
+    init(
+        items: [String],
+        onStartSpinning: @escaping () -> Void = {},
+        onStopSpinning: @escaping (String) -> Void
+    ) {
         self.wedges = items.map {
             ($0, .random(in: 0 ... 1))
         }
+        self.onStartSpinning = onStartSpinning
+        self.onStopSpinning = onStopSpinning
     }
     
     /// The wedges on the wheel.
     private let wedges: [(label: String, hue: Double)]
+    
+    /// The action to perform when the wheel starts spinning.
+    private let onStartSpinning: () -> Void
+    
+    /// The action to perform when the wheel stops spinning.
+    private let onStopSpinning: (String) -> Void
     
     /// The angle offset as a result of spinning the wheel.
     @State private var spinAngle = Angle.zero
@@ -65,12 +82,20 @@ struct RouletteView: View {
             return
         }
         
-        spinAngle.normalize()
         isSpinning = true
+        onStartSpinning()
         withAnimation(.easeOut(duration: Constants.spinTime)) {
             spinAngle += (.radians(.pi * 2) * turnCount)
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + Constants.spinTime) {
+            spinAngle.normalize()
+            var chosenAngle = Double.pi * 1.5 - spinAngle.radians
+            if chosenAngle < 0 {
+                chosenAngle += (.pi * 2)
+            }
+            let chosenWedgeIndex = Int(floor(chosenAngle / wedgeAngle.radians))
+            let chosenItem = wedges[chosenWedgeIndex].label
+            onStopSpinning(chosenItem)
             isSpinning = false
         }
     }
@@ -118,7 +143,7 @@ struct RouletteView_Previews: PreviewProvider {
     ]
     
     static var previews: some View {
-        RouletteView(items: members)
+        RouletteView(items: members) { _ in }
             .frame(width: 400, height: 400)
             .padding()
             .previewLayout(.sizeThatFits)

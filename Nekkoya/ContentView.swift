@@ -18,7 +18,7 @@ struct ContentView: View {
     ]
     
     var body: some View {
-        RouletteView(items: members)
+        RouletteView(items: members) { print($0) }
             .frame(width: 400, height: 400)
             .padding()
     }
