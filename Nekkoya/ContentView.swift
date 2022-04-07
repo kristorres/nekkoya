@@ -18,9 +18,28 @@ struct ContentView: View {
     ]
     
     var body: some View {
-        RouletteView(items: members) { print($0) }
-            .frame(width: 400, height: 400)
+        HStack(spacing: Constants.rootStackSpacing) {
+            Color.clear
+                .overlay(
+                    RouletteView(items: members) { print($0) }
+                        .scaledToFit()
+                )
+            Color.clear
+        }
             .padding()
+            .frame(
+                minWidth: Constants.minWindowWidth,
+                maxWidth: .infinity,
+                minHeight: Constants.minWindowHeight,
+                maxHeight: .infinity
+            )
+    }
+    
+    /// An internal enum that contains constants.
+    private enum Constants {
+        static let minWindowWidth: CGFloat = 1200
+        static let minWindowHeight: CGFloat = 600
+        static let rootStackSpacing: CGFloat = 16
     }
 }
 
