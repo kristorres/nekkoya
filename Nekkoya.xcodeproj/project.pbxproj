@@ -15,6 +15,7 @@
 		303C8B9927F54BC50062086B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 303C8B9827F54BC50062086B /* Preview Assets.xcassets */; };
 		303C8BA427F667070062086B /* CircularSector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303C8BA327F667070062086B /* CircularSector.swift */; };
 		303C8BA627F785F10062086B /* WedgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303C8BA527F785F10062086B /* WedgeView.swift */; };
+		30722D8028022EAD00DF87CA /* Urban in Frameworks */ = {isa = PBXBuildFile; productRef = 30722D7F28022EAD00DF87CA /* Urban */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				30722D8028022EAD00DF87CA /* Urban in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,6 +119,9 @@
 			dependencies = (
 			);
 			name = Nekkoya;
+			packageProductDependencies = (
+				30722D7F28022EAD00DF87CA /* Urban */,
+			);
 			productName = Nekkoya;
 			productReference = 303C8B8E27F54BC40062086B /* Nekkoya.app */;
 			productType = "com.apple.product-type.application";
@@ -145,6 +150,9 @@
 				Base,
 			);
 			mainGroup = 303C8B8527F54BC40062086B;
+			packageReferences = (
+				30722D7E28022EAD00DF87CA /* XCRemoteSwiftPackageReference "urban" */,
+			);
 			productRefGroup = 303C8B8F27F54BC40062086B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -376,6 +384,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		30722D7E28022EAD00DF87CA /* XCRemoteSwiftPackageReference "urban" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kristorres/urban";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		30722D7F28022EAD00DF87CA /* Urban */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 30722D7E28022EAD00DF87CA /* XCRemoteSwiftPackageReference "urban" */;
+			productName = Urban;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 303C8B8627F54BC40062086B /* Project object */;
 }

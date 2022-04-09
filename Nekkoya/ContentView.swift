@@ -1,4 +1,5 @@
 import SwiftUI
+import Urban
 
 /// A view that renders the content of the app.
 struct ContentView: View {
@@ -17,22 +18,30 @@ struct ContentView: View {
         "Jang Won-young"
     ]
     
+    /// The Urban theme.
+    @Environment(\.urbanTheme) private var theme
+    
     var body: some View {
-        HStack(spacing: Constants.rootStackSpacing) {
-            Color.clear
-                .overlay(
-                    RouletteView(items: members) { print($0) }
-                        .scaledToFit()
+        ZStack {
+            theme.palette.background.main.ignoresSafeArea()
+            
+            HStack(spacing: Constants.rootStackSpacing) {
+                Color.clear
+                    .overlay(
+                        RouletteView(items: members) { print($0) }
+                            .scaledToFit()
+                    )
+                Color.clear
+                    .urbanPaper()
+            }
+                .padding()
+                .frame(
+                    minWidth: Constants.minWindowWidth,
+                    maxWidth: .infinity,
+                    minHeight: Constants.minWindowHeight,
+                    maxHeight: .infinity
                 )
-            Color.clear
         }
-            .padding()
-            .frame(
-                minWidth: Constants.minWindowWidth,
-                maxWidth: .infinity,
-                minHeight: Constants.minWindowHeight,
-                maxHeight: .infinity
-            )
     }
     
     /// An internal enum that contains constants.
