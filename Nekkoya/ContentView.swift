@@ -3,20 +3,28 @@ import Urban
 
 /// A view that renders the content of the app.
 struct ContentView: View {
-    private let members = [
-        "Kwon Eun-bi",
-        "Miyawaki Sakura",
-        "Kang Hye-won",
-        "Choi Ye-na",
-        "Lee Chae-yeon",
-        "Kim Chae-won",
-        "Kim Min-ju",
-        "Yabuki Nako",
-        "Honda Hitomi",
-        "Jo Yu-ri",
-        "An Yu-jin",
-        "Jang Won-young"
-    ]
+    init() {
+        let members = [
+            "Kwon Eun-bi",
+            "Miyawaki Sakura",
+            "Kang Hye-won",
+            "Choi Ye-na",
+            "Lee Chae-yeon",
+            "Kim Chae-won",
+            "Kim Min-ju",
+            "Yabuki Nako",
+            "Honda Hitomi",
+            "Jo Yu-ri",
+            "An Yu-jin",
+            "Jang Won-young"
+        ]
+        
+        self.rouletteItems = members.map {
+            RouletteItem(title: $0, hue: .random(in: 0 ... 1))
+        }
+    }
+    
+    private let rouletteItems: [RouletteItem]
     
     /// The Urban theme.
     @Environment(\.urbanTheme) private var theme
@@ -28,7 +36,7 @@ struct ContentView: View {
             HStack(spacing: Constants.rootStackSpacing) {
                 Color.clear
                     .overlay(
-                        RouletteView(items: members) { print($0) }
+                        Roulette(items: rouletteItems) { print($0) }
                             .scaledToFit()
                     )
                 Color.clear

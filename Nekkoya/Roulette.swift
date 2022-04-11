@@ -1,37 +1,35 @@
 import SwiftUI
 
 /// A view that renders a roulette-style wheel.
-struct RouletteView: View {
+struct Roulette: View {
     
     /// Creates a roulette-style wheel with the given items.
     ///
-    /// - Parameter items:           The labels of the items that are displayed
-    ///                              on the wheel’s wedges.
-    /// - Parameter onStartSpinning: The action to perform when the wheel starts
-    ///                              spinning.
-    /// - Parameter onStopSpinning:  The action to perform when the wheel stops
-    ///                              spinning. The closure takes the chosen item
-    ///                              as its sole argument.
+    /// - Parameter items:       The items that are displayed on the wheel’s
+    ///                          wedges.
+    /// - Parameter onSpinStart: The action to perform when the wheel starts
+    ///                          spinning.
+    /// - Parameter onSpinEnd:   The action to perform when the wheel stops
+    ///                          spinning. The closure takes the `title` of the
+    ///                          chosen item as its sole argument.
     init(
-        items: [String],
-        onStartSpinning: @escaping () -> Void = {},
-        onStopSpinning: @escaping (String) -> Void
+        items: [RouletteItem],
+        onSpinStart: @escaping () -> Void = {},
+        onSpinEnd: @escaping (String) -> Void
     ) {
-        self.wedges = items.map {
-            ($0, .random(in: 0 ... 1))
-        }
-        self.onStartSpinning = onStartSpinning
-        self.onStopSpinning = onStopSpinning
+        self.items = items
+        self.onSpinStart = onSpinStart
+        self.onSpinEnd = onSpinEnd
     }
     
-    /// The wedges on the wheel.
-    private let wedges: [(label: String, hue: Double)]
+    /// The items that are displayed on the wheel’s wedges.
+    private let items: [RouletteItem]
     
     /// The action to perform when the wheel starts spinning.
-    private let onStartSpinning: () -> Void
+    private let onSpinStart: () -> Void
     
     /// The action to perform when the wheel stops spinning.
-    private let onStopSpinning: (String) -> Void
+    private let onSpinEnd: (String) -> Void
     
     /// The angle offset as a result of spinning the wheel.
     @State private var spinAngle = Angle.zero
@@ -44,12 +42,8 @@ struct RouletteView: View {
             let radius = geometry.size.width / 2
             
             ZStack {
-                ForEach(wedges.indices, id: \.self) { index in
-                    WedgeView(
-                        label: wedges[index].label,
-                        angle: wedgeAngle,
-                        hue: wedges[index].hue
-                    )
+                ForEach(items.indices, id: \.self) { index in
+                    Wedge(item: items[index], angle: wedgeAngle)
                         .rotationEffect(wedgeAngle * Double(index))
                 }
                     .rotationEffect(spinAngle)
@@ -71,7 +65,7 @@ struct RouletteView: View {
     
     /// The central angle of each wedge on the wheel.
     private var wedgeAngle: Angle {
-        .radians(.pi * 2) / Double(wedges.count)
+        .radians(.pi * 2) / Double(items.count)
     }
     
     /// Spins the wheel.
@@ -83,7 +77,7 @@ struct RouletteView: View {
         }
         
         isSpinning = true
-        onStartSpinning()
+        onSpinStart()
         withAnimation(.easeOut(duration: Constants.spinTime)) {
             spinAngle += (.radians(.pi * 2) * turnCount)
         }
@@ -93,9 +87,9 @@ struct RouletteView: View {
             if chosenAngle < 0 {
                 chosenAngle += (.pi * 2)
             }
-            let chosenWedgeIndex = Int(floor(chosenAngle / wedgeAngle.radians))
-            let chosenItem = wedges[chosenWedgeIndex].label
-            onStopSpinning(chosenItem)
+            let chosenItemIndex = Int(floor(chosenAngle / wedgeAngle.radians))
+            let chosenItemTitle = items[chosenItemIndex].title
+            onSpinEnd(chosenItemTitle)
             isSpinning = false
         }
     }
@@ -126,7 +120,7 @@ struct RouletteView: View {
 }
 
 #if DEBUG
-struct RouletteView_Previews: PreviewProvider {
+struct Roulette_Previews: PreviewProvider {
     private static let members = [
         "Kwon Eun-bi",
         "Miyawaki Sakura",
@@ -143,7 +137,11 @@ struct RouletteView_Previews: PreviewProvider {
     ]
     
     static var previews: some View {
-        RouletteView(items: members) { _ in }
+        let rouletteItems = members.map {
+            RouletteItem(title: $0, hue: .random(in: 0 ... 1))
+        }
+        
+        return Roulette(items: rouletteItems) { _ in }
             .frame(width: 400, height: 400)
             .padding()
             .previewLayout(.sizeThatFits)
