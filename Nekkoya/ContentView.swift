@@ -3,28 +3,12 @@ import Urban
 
 /// A view that renders the content of the app.
 struct ContentView: View {
-    init() {
-        let members = [
-            "Kwon Eun-bi",
-            "Miyawaki Sakura",
-            "Kang Hye-won",
-            "Choi Ye-na",
-            "Lee Chae-yeon",
-            "Kim Chae-won",
-            "Kim Min-ju",
-            "Yabuki Nako",
-            "Honda Hitomi",
-            "Jo Yu-ri",
-            "An Yu-jin",
-            "Jang Won-young"
-        ]
-        
-        self.rouletteItems = members.map {
-            RouletteItem(title: $0, hue: .random(in: 0 ... 1))
-        }
-    }
     
-    private let rouletteItems: [RouletteItem]
+    /// The items that are displayed on the roulette.
+    @State private var rouletteItems = [RouletteItem]()
+    
+    /// The input for the new item to add.
+    @State private var newItemInput = ""
     
     /// The Urban theme.
     @Environment(\.urbanTheme) private var theme
@@ -39,7 +23,25 @@ struct ContentView: View {
                         Roulette(items: rouletteItems) { print($0) }
                             .scaledToFit()
                     )
-                Color.clear
+                VStack(spacing: 16) {
+                    Text("ITEMS")
+                        .font(theme.typography.title)
+                    HStack(spacing: 16) {
+                        TextField(
+                            "New Item",
+                            text: $newItemInput,
+                            onCommit: addNewItem
+                        )
+                            .textFieldStyle(.urban())
+                        Button(action: addNewItem) {
+                            Image(systemName: "plus")
+                        }
+                            .buttonStyle(.urban(variant: .filled))
+                            .disabled(newItemInput.trimmed.isEmpty)
+                    }
+                }
+                    .padding()
+                    .frame(maxWidth: .infinity)
                     .urbanPaper()
             }
                 .padding()
@@ -50,6 +52,23 @@ struct ContentView: View {
                     maxHeight: .infinity
                 )
         }
+    }
+    
+    /// Adds a new item to the roulette.
+    ///
+    /// If the trimmed input is empty, then this method will do nothing.
+    /// Otherwise, after completing this method, the *New Item* text field will
+    /// be cleared out.
+    private func addNewItem() {
+        let newItemTitle = newItemInput.trimmed
+        
+        if newItemTitle.isEmpty {
+            return
+        }
+        
+        let hue = Double.random(in: 0 ... 1)
+        rouletteItems.append(RouletteItem(title: newItemTitle, hue: hue))
+        newItemInput = ""
     }
     
     /// An internal enum that contains constants.

@@ -38,22 +38,27 @@ struct Roulette: View {
     @State private var isSpinning = false
     
     var body: some View {
-        GeometryReader { geometry in
-            let radius = geometry.size.width / 2
-            
-            ZStack {
-                ForEach(items.indices, id: \.self) { index in
-                    Wedge(item: items[index], angle: wedgeAngle)
-                        .rotationEffect(wedgeAngle * Double(index))
+        if items.isEmpty {
+            Circle().fill(Color.gray.opacity(0.5))
+        }
+        else {
+            GeometryReader { geometry in
+                let radius = geometry.size.width / 2
+                
+                ZStack {
+                    ForEach(items.indices, id: \.self) { index in
+                        Wedge(item: items[index], angle: wedgeAngle)
+                            .rotationEffect(wedgeAngle * Double(index))
+                    }
+                        .rotationEffect(spinAngle)
+                    
+                    Image(systemName: "arrowtriangle.up.fill")
+                        .font(.system(size: radius / 8))
+                        .foregroundColor(.black)
+                        .offset(y: -radius / 3)
+                    
+                    spinButton(width: radius / 2)
                 }
-                    .rotationEffect(spinAngle)
-                
-                Image(systemName: "arrowtriangle.up.fill")
-                    .font(.system(size: radius / 8))
-                    .foregroundColor(.black)
-                    .offset(y: -radius / 3)
-                
-                spinButton(width: radius / 2)
             }
         }
     }
