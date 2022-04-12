@@ -23,30 +23,7 @@ struct ContentView: View {
                         Roulette(items: rouletteItems) { print($0) }
                             .scaledToFit()
                     )
-                VStack(spacing: 16) {
-                    Text("ITEMS").font(theme.typography.title)
-                    HStack(spacing: 16) {
-                        TextField(
-                            "New Item",
-                            text: $newItemInput,
-                            onCommit: addNewItem
-                        )
-                            .textFieldStyle(.urban())
-                        Button(action: addNewItem) {
-                            Image(systemName: "plus")
-                        }
-                            .buttonStyle(.urban(variant: .filled))
-                            .disabled(newItemInput.trimmed.isEmpty)
-                    }
-                    Divider()
-                    if rouletteItems.isEmpty {
-                        Text("No items added.").font(theme.typography.body)
-                    }
-                    Spacer()
-                }
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .urbanPaper()
+                itemInputSection
             }
                 .padding()
                 .frame(
@@ -56,6 +33,30 @@ struct ContentView: View {
                     maxHeight: .infinity
                 )
         }
+    }
+    
+    /// The section where the user can input items into the roulette.
+    private var itemInputSection: some View {
+        VStack(spacing: 16) {
+            Text("ITEMS").font(theme.typography.title)
+            HStack(spacing: 16) {
+                TextField("New Item", text: $newItemInput, onCommit: addNewItem)
+                    .textFieldStyle(.urban())
+                Button(action: addNewItem) {
+                    Image(systemName: "plus")
+                }
+                    .buttonStyle(.urban(variant: .filled))
+                    .disabled(newItemInput.trimmed.isEmpty)
+            }
+            Divider()
+            if rouletteItems.isEmpty {
+                Text("No items added.").font(theme.typography.body)
+            }
+            Spacer()
+        }
+            .padding()
+            .frame(maxWidth: .infinity)
+            .urbanPaper()
     }
     
     /// Adds a new item to the roulette.
