@@ -72,7 +72,7 @@ struct ContentView: View {
         ScrollView(.vertical) {
             LazyVStack(spacing: 16) {
                 ForEach(rouletteItems) {
-                    ItemRow(item: $0)
+                    ItemRow(item: $0, edit: editItem, remove: removeItem)
                 }
             }
         }
@@ -99,6 +99,35 @@ struct ContentView: View {
         let hue = Double.random(in: 0 ... 1)
         rouletteItems.append(RouletteItem(title: newItemTitle, hue: hue))
         newItemInput = ""
+    }
+    
+    /// Sets the title of the given item on the roulette.
+    ///
+    /// If the trimmed version of `newTitle` is empty, then this method will do
+    /// nothing.
+    ///
+    /// - Parameter item:     The item to edit.
+    /// - Parameter newTitle: The new title.
+    private func editItem(_ item: RouletteItem, newTitle: String) {
+        if newTitle.trimmed.isEmpty {
+            return
+        }
+        
+        if let itemIndex = rouletteItems.firstIndex(matching: item) {
+            rouletteItems[itemIndex] = RouletteItem(
+                title: newTitle.trimmed,
+                hue: item.hue
+            )
+        }
+    }
+    
+    /// Removes the given item from the roulette.
+    ///
+    /// - Parameter item: The item to remove.
+    private func removeItem(_ item: RouletteItem) {
+        if let itemIndex = rouletteItems.firstIndex(matching: item) {
+            rouletteItems.remove(at: itemIndex)
+        }
     }
     
     /// An internal enum that contains constants.
