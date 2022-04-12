@@ -24,8 +24,7 @@ struct ContentView: View {
                             .scaledToFit()
                     )
                 VStack(spacing: 16) {
-                    Text("ITEMS")
-                        .font(theme.typography.title)
+                    Text("ITEMS").font(theme.typography.title)
                     HStack(spacing: 16) {
                         TextField(
                             "New Item",
@@ -39,6 +38,11 @@ struct ContentView: View {
                             .buttonStyle(.urban(variant: .filled))
                             .disabled(newItemInput.trimmed.isEmpty)
                     }
+                    Divider()
+                    if rouletteItems.isEmpty {
+                        Text("No items added.").font(theme.typography.body)
+                    }
+                    Spacer()
                 }
                     .padding()
                     .frame(maxWidth: .infinity)
