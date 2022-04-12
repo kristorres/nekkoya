@@ -20,6 +20,7 @@
 		30722D902804E59F00DF87CA /* String+Trimmed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30722D8F2804E59F00DF87CA /* String+Trimmed.swift */; };
 		30722D9228056B4F00DF87CA /* ItemRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30722D9128056B4F00DF87CA /* ItemRow.swift */; };
 		30722D952805F06400DF87CA /* Array+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30722D942805F06400DF87CA /* Array+Identifiable.swift */; };
+		30722D9828061DB300DF87CA /* CSV in Frameworks */ = {isa = PBXBuildFile; productRef = 30722D9728061DB300DF87CA /* CSV */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,8 @@
 		30722D8F2804E59F00DF87CA /* String+Trimmed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Trimmed.swift"; sourceTree = "<group>"; };
 		30722D9128056B4F00DF87CA /* ItemRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemRow.swift; sourceTree = "<group>"; };
 		30722D942805F06400DF87CA /* Array+Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Identifiable.swift"; sourceTree = "<group>"; };
+		30722D9A280631E500DF87CA /* iz-one.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = "iz-one.csv"; sourceTree = "<group>"; };
+		30722D9B2806355E00DF87CA /* one-piece.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = "one-piece.csv"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +50,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				30722D8928039F7F00DF87CA /* Urban in Frameworks */,
+				30722D9828061DB300DF87CA /* CSV in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -67,6 +71,7 @@
 			children = (
 				303C8BA227F556550062086B /* README.md */,
 				303C8BA027F54D6D0062086B /* .gitignore */,
+				30722D992806316800DF87CA /* Inputs */,
 				303C8B9027F54BC40062086B /* Nekkoya */,
 				303C8B8F27F54BC40062086B /* Products */,
 			);
@@ -131,6 +136,15 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		30722D992806316800DF87CA /* Inputs */ = {
+			isa = PBXGroup;
+			children = (
+				30722D9A280631E500DF87CA /* iz-one.csv */,
+				30722D9B2806355E00DF87CA /* one-piece.csv */,
+			);
+			path = Inputs;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -149,6 +163,7 @@
 			name = Nekkoya;
 			packageProductDependencies = (
 				30722D8828039F7F00DF87CA /* Urban */,
+				30722D9728061DB300DF87CA /* CSV */,
 			);
 			productName = Nekkoya;
 			productReference = 303C8B8E27F54BC40062086B /* Nekkoya.app */;
@@ -180,6 +195,7 @@
 			mainGroup = 303C8B8527F54BC40062086B;
 			packageReferences = (
 				30722D8728039F7F00DF87CA /* XCRemoteSwiftPackageReference "urban" */,
+				30722D9628061DB200DF87CA /* XCRemoteSwiftPackageReference "CSV" */,
 			);
 			productRefGroup = 303C8B8F27F54BC40062086B /* Products */;
 			projectDirPath = "";
@@ -426,6 +442,14 @@
 				minimumVersion = 0.0.2;
 			};
 		};
+		30722D9628061DB200DF87CA /* XCRemoteSwiftPackageReference "CSV" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/yaslab/CSV.swift";
+			requirement = {
+				kind = exactVersion;
+				version = 2.4.3;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -433,6 +457,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 30722D8728039F7F00DF87CA /* XCRemoteSwiftPackageReference "urban" */;
 			productName = Urban;
+		};
+		30722D9728061DB300DF87CA /* CSV */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 30722D9628061DB200DF87CA /* XCRemoteSwiftPackageReference "CSV" */;
+			productName = CSV;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

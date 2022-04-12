@@ -1,3 +1,4 @@
+import CSV
 import SwiftUI
 import Urban
 
@@ -38,7 +39,11 @@ struct ContentView: View {
     /// The section where the user can input items into the roulette.
     private var itemInputSection: some View {
         VStack(spacing: 16) {
-            Text("ITEMS").font(theme.typography.title)
+            HStack {
+                Text("ITEMS").font(theme.typography.title)
+                Spacer()
+                uploadButton
+            }
             HStack(spacing: 16) {
                 newItemTextField
                 addNewItemButton
@@ -84,6 +89,14 @@ struct ContentView: View {
             .textFieldStyle(.urban())
     }
     
+    /// The button to upload items from a CSV file.
+    private var uploadButton: some View {
+        Button(action: uploadItems) {
+            Image(systemName: "folder").font(theme.typography.header)
+        }
+            .buttonStyle(.urban(variant: .filled))
+    }
+    
     /// Adds a new item to the roulette.
     ///
     /// If the trimmed input is empty, then this method will do nothing.
@@ -127,6 +140,36 @@ struct ContentView: View {
     private func removeItem(_ item: RouletteItem) {
         if let itemIndex = rouletteItems.firstIndex(matching: item) {
             rouletteItems.remove(at: itemIndex)
+        }
+    }
+    
+    /// Uploads items from a CSV file.
+    private func uploadItems() {
+        let openPanel = NSOpenPanel()
+        openPanel.title = "Upload Items"
+        openPanel.showsResizeIndicator = true
+        openPanel.canChooseDirectories = false
+        openPanel.allowsMultipleSelection = false
+        openPanel.showsHiddenFiles = false
+        openPanel.allowedContentTypes = [.commaSeparatedText]
+        
+        let response = openPanel.runModal()
+        
+        if response == .OK {
+            let documentURL = openPanel.url!
+            let documentData = try! Data(contentsOf: documentURL)
+            let content = String(data: documentData, encoding: .utf8)!
+            let csvReader = try! CSVReader(string: content)
+            
+            rouletteItems = []
+            
+            while let row = csvReader.next() {
+                for value in row {
+                    let hue = Double.random(in: 0 ... 1)
+                    let item = RouletteItem(title: value.trimmed, hue: hue)
+                    rouletteItems.append(item)
+                }
+            }
         }
     }
     
