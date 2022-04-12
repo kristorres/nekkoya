@@ -14,14 +14,8 @@ struct ItemRow: View {
         HStack {
             Text(item.title).font(theme.typography.body)
             Spacer()
-            Button(action: {}) {
-                Image(systemName: "pencil").font(theme.typography.header)
-            }
-                .buttonStyle(.urban(variant: .filled))
-            Button(action: {}) {
-                Image(systemName: "xmark").font(theme.typography.header)
-            }
-                .buttonStyle(.urban(variant: .filled, color: .danger))
+            editItemButton
+            removeItemButton
         }
             .padding()
             .urbanPaper(border: true, shadow: false)
@@ -34,6 +28,22 @@ struct ItemRow: View {
                 theme.palette.surface.content,
                 lineWidth: Constants.borderWidth
             )
+    }
+    
+    /// The button to edit the item.
+    private var editItemButton: some View {
+        Button(action: {}) {
+            Image(systemName: "pencil").font(theme.typography.header)
+        }
+            .buttonStyle(.urban(variant: .filled))
+    }
+    
+    /// The button to remove the item from the roulette.
+    private var removeItemButton: some View {
+        Button(action: {}) {
+            Image(systemName: "xmark").font(theme.typography.header)
+        }
+            .buttonStyle(.urban(variant: .filled, color: .danger))
     }
     
     /// An internal enum that contains drawing constants.

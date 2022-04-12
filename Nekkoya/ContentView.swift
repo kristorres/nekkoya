@@ -40,13 +40,8 @@ struct ContentView: View {
         VStack(spacing: 16) {
             Text("ITEMS").font(theme.typography.title)
             HStack(spacing: 16) {
-                TextField("New Item", text: $newItemInput, onCommit: addNewItem)
-                    .textFieldStyle(.urban())
-                Button(action: addNewItem) {
-                    Image(systemName: "plus").font(theme.typography.header)
-                }
-                    .buttonStyle(.urban(variant: .filled))
-                    .disabled(newItemInput.trimmed.isEmpty)
+                newItemTextField
+                addNewItemButton
             }
             Divider()
             if rouletteItems.isEmpty {
@@ -54,19 +49,39 @@ struct ContentView: View {
                 Spacer()
             }
             else {
-                ScrollView(.vertical) {
-                    LazyVStack(spacing: 16) {
-                        ForEach(rouletteItems.indices, id: \.self) { index in
-                            ItemRow(item: rouletteItems[index])
-                        }
-                    }
-                }
+                itemList
             }
         }
             .font(theme.typography.body)
             .padding()
             .frame(maxWidth: .infinity)
             .urbanPaper()
+    }
+    
+    /// The button to add a new item to the roulette.
+    private var addNewItemButton: some View {
+        Button(action: addNewItem) {
+            Image(systemName: "plus").font(theme.typography.header)
+        }
+            .buttonStyle(.urban(variant: .filled))
+            .disabled(newItemInput.trimmed.isEmpty)
+    }
+    
+    /// The scrollable list of items on the roulette.
+    private var itemList: some View {
+        ScrollView(.vertical) {
+            LazyVStack(spacing: 16) {
+                ForEach(rouletteItems.indices, id: \.self) { index in
+                    ItemRow(item: rouletteItems[index])
+                }
+            }
+        }
+    }
+    
+    /// The text field to input a new item.
+    private var newItemTextField: some View {
+        TextField("New Item", text: $newItemInput, onCommit: addNewItem)
+            .textFieldStyle(.urban())
     }
     
     /// Adds a new item to the roulette.
