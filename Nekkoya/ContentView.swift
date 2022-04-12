@@ -43,17 +43,27 @@ struct ContentView: View {
                 TextField("New Item", text: $newItemInput, onCommit: addNewItem)
                     .textFieldStyle(.urban())
                 Button(action: addNewItem) {
-                    Image(systemName: "plus")
+                    Image(systemName: "plus").font(theme.typography.header)
                 }
                     .buttonStyle(.urban(variant: .filled))
                     .disabled(newItemInput.trimmed.isEmpty)
             }
             Divider()
             if rouletteItems.isEmpty {
-                Text("No items added.").font(theme.typography.body)
+                Text("No items added.")
+                Spacer()
             }
-            Spacer()
+            else {
+                ScrollView(.vertical) {
+                    LazyVStack(spacing: 16) {
+                        ForEach(rouletteItems.indices, id: \.self) { index in
+                            ItemRow(item: rouletteItems[index])
+                        }
+                    }
+                }
+            }
         }
+            .font(theme.typography.body)
             .padding()
             .frame(maxWidth: .infinity)
             .urbanPaper()

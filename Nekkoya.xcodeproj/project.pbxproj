@@ -18,6 +18,7 @@
 		30722D8928039F7F00DF87CA /* Urban in Frameworks */ = {isa = PBXBuildFile; productRef = 30722D8828039F7F00DF87CA /* Urban */; };
 		30722D8C2803A6B900DF87CA /* RouletteItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30722D8B2803A6B900DF87CA /* RouletteItem.swift */; };
 		30722D902804E59F00DF87CA /* String+Trimmed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30722D8F2804E59F00DF87CA /* String+Trimmed.swift */; };
+		30722D9228056B4F00DF87CA /* ItemRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30722D9128056B4F00DF87CA /* ItemRow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		303C8BA527F785F10062086B /* Roulette+Wedge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Roulette+Wedge.swift"; sourceTree = "<group>"; };
 		30722D8B2803A6B900DF87CA /* RouletteItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouletteItem.swift; sourceTree = "<group>"; };
 		30722D8F2804E59F00DF87CA /* String+Trimmed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Trimmed.swift"; sourceTree = "<group>"; };
+		30722D9128056B4F00DF87CA /* ItemRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemRow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +83,7 @@
 			children = (
 				3001255D27FE412F00A7B8B1 /* Angle+Normalize.swift */,
 				303C8B9327F54BC40062086B /* ContentView.swift */,
+				30722D9128056B4F00DF87CA /* ItemRow.swift */,
 				303C8B9127F54BC40062086B /* NekkoyaApp.swift */,
 				300CFE6A27FA9F2100930143 /* Roulette.swift */,
 				30722D8F2804E59F00DF87CA /* String+Trimmed.swift */,
@@ -200,6 +203,7 @@
 				303C8BA427F667070062086B /* CircularSector.swift in Sources */,
 				303C8BA627F785F10062086B /* Roulette+Wedge.swift in Sources */,
 				300CFE6B27FA9F2100930143 /* Roulette.swift in Sources */,
+				30722D9228056B4F00DF87CA /* ItemRow.swift in Sources */,
 				303C8B9427F54BC40062086B /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
