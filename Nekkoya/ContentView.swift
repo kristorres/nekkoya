@@ -71,8 +71,8 @@ struct ContentView: View {
     private var itemList: some View {
         ScrollView(.vertical) {
             LazyVStack(spacing: 16) {
-                ForEach(rouletteItems.indices, id: \.self) { index in
-                    ItemRow(item: rouletteItems[index])
+                ForEach(rouletteItems) {
+                    ItemRow(item: $0)
                 }
             }
         }
