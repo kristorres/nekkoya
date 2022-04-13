@@ -42,6 +42,7 @@
 		30722D942805F06400DF87CA /* Array+Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Identifiable.swift"; sourceTree = "<group>"; };
 		30722D9A280631E500DF87CA /* iz-one.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = "iz-one.csv"; sourceTree = "<group>"; };
 		30722D9B2806355E00DF87CA /* one-piece.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = "one-piece.csv"; sourceTree = "<group>"; };
+		30722D9D280662CA00DF87CA /* nekkoya.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = nekkoya.gif; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +71,7 @@
 			isa = PBXGroup;
 			children = (
 				303C8BA227F556550062086B /* README.md */,
+				30722D9D280662CA00DF87CA /* nekkoya.gif */,
 				303C8BA027F54D6D0062086B /* .gitignore */,
 				30722D992806316800DF87CA /* Inputs */,
 				303C8B9027F54BC40062086B /* Nekkoya */,
