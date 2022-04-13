@@ -11,6 +11,12 @@ struct ContentView: View {
     /// The input for the new item to add.
     @State private var newItemInput = ""
     
+    /// Indicates whether the roulette is spinning.
+    @State private var rouletteIsSpinning = false
+    
+    /// The title of the chosen item after the roulette stops spinning.
+    @State private var chosenItemTitle: String?
+    
     /// The Urban theme.
     @Environment(\.urbanTheme) private var theme
     
@@ -18,13 +24,27 @@ struct ContentView: View {
         ZStack {
             theme.palette.background.main.ignoresSafeArea()
             
-            HStack(spacing: Constants.rootStackSpacing) {
+            HStack(spacing: Constants.defaultSpacing) {
                 Color.clear
                     .overlay(
-                        Roulette(items: rouletteItems) { print($0) }
+                        Roulette(items: rouletteItems) {
+                            rouletteIsSpinning = true
+                        } onSpinEnd: { title in
+                            rouletteIsSpinning = false
+                            chosenItemTitle = title
+                        }
                             .scaledToFit()
                     )
-                itemInputSection
+                if rouletteIsSpinning {
+                    Text("Spinning…")
+                        .font(theme.typography.header)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .urbanPaper()
+                }
+                else {
+                    itemInputSection
+                }
             }
                 .padding()
                 .frame(
@@ -33,18 +53,22 @@ struct ContentView: View {
                     minHeight: Constants.minWindowHeight,
                     maxHeight: .infinity
                 )
+            
+            if let title = chosenItemTitle {
+                chosenItemModal(title: title)
+            }
         }
     }
     
     /// The section where the user can input items into the roulette.
     private var itemInputSection: some View {
-        VStack(spacing: 16) {
+        VStack(spacing: Constants.defaultSpacing) {
             HStack {
                 Text("ITEMS").font(theme.typography.title)
                 Spacer()
                 uploadButton
             }
-            HStack(spacing: 16) {
+            HStack(spacing: Constants.defaultSpacing) {
                 newItemTextField
                 addNewItemButton
             }
@@ -75,7 +99,7 @@ struct ContentView: View {
     /// The scrollable list of items on the roulette.
     private var itemList: some View {
         ScrollView(.vertical) {
-            LazyVStack(spacing: 16) {
+            LazyVStack(spacing: Constants.defaultSpacing) {
                 ForEach(rouletteItems) {
                     ItemRow(item: $0, edit: editItem, remove: removeItem)
                 }
@@ -112,6 +136,29 @@ struct ContentView: View {
         let hue = Double.random(in: 0 ... 1)
         rouletteItems.append(RouletteItem(title: newItemTitle, hue: hue))
         newItemInput = ""
+    }
+    
+    /// The modal that displays the chosen item after the roulette stops
+    /// spinning.
+    private func chosenItemModal(title: String) -> some View {
+        return ZStack {
+            Color.gray.opacity(0.5).ignoresSafeArea()
+            
+            VStack(spacing: 0) {
+                Text(title)
+                    .font(.system(size: Constants.chosenItemTitleFontSize))
+                    .padding()
+                Divider()
+                Button("OK") {
+                    chosenItemTitle = nil
+                }
+                    .buttonStyle(.urban())
+                    .padding(Constants.chosenItemModalFooterPadding)
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+            }
+                .frame(width: Constants.chosenItemModalWidth)
+                .urbanPaper()
+        }
     }
     
     /// Sets the title of the given item on the roulette.
@@ -177,7 +224,12 @@ struct ContentView: View {
     private enum Constants {
         static let minWindowWidth: CGFloat = 1200
         static let minWindowHeight: CGFloat = 600
-        static let rootStackSpacing: CGFloat = 16
+        
+        static let chosenItemTitleFontSize: CGFloat = 72
+        static let chosenItemModalFooterPadding: CGFloat = 8
+        static let chosenItemModalWidth: CGFloat = 800
+        
+        static let defaultSpacing: CGFloat = 16
     }
 }
 
